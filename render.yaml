@@ -1,0 +1,15 @@
+services:
+  - type: web
+    name: pandas-lab
+    runtime: docker
+    plan: free
+    region: singapore
+    dockerfilePath: ./Dockerfile
+    healthCheckPath: /api/health
+    envVars:
+      - key: PANDAS_LAB_SESSION_ISOLATION
+        value: "1"
+      - key: PANDAS_LAB_COOKIE_SECURE
+        value: "1"
+      - key: PANDAS_LAB_DATA_DIR
+        value: /app/data

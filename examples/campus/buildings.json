@@ -1,0 +1,66 @@
+[
+  {
+    "building_id":"B01",
+    "building_name":"Library",
+    "building_type":"Library",
+    "zone":"North",
+    "area_m2":8200,
+    "capacity":600
+  },
+  {
+    "building_id":"B02",
+    "building_name":"Teaching A",
+    "building_type":"Teaching",
+    "zone":"North",
+    "area_m2":13500,
+    "capacity":1600
+  },
+  {
+    "building_id":"B03",
+    "building_name":"Lab A",
+    "building_type":"Laboratory",
+    "zone":"North",
+    "area_m2":9700,
+    "capacity":450
+  },
+  {
+    "building_id":"B04",
+    "building_name":"Dorm A",
+    "building_type":"Dormitory",
+    "zone":"South",
+    "area_m2":18000,
+    "capacity":2200
+  },
+  {
+    "building_id":"B05",
+    "building_name":"Teaching B",
+    "building_type":"Teaching",
+    "zone":"South",
+    "area_m2":11200,
+    "capacity":1250
+  },
+  {
+    "building_id":"B06",
+    "building_name":"Lab B",
+    "building_type":"Laboratory",
+    "zone":"East",
+    "area_m2":7600,
+    "capacity":380
+  },
+  {
+    "building_id":"B07",
+    "building_name":"Dorm B",
+    "building_type":"Dormitory",
+    "zone":"East",
+    "area_m2":15600,
+    "capacity":1850
+  },
+  {
+    "building_id":"B08",
+    "building_name":"Sports Center",
+    "building_type":"Sports",
+    "zone":"South",
+    "area_m2":12500,
+    "capacity":800
+  }
+]

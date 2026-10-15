@@ -1,0 +1,4 @@
+@import url('./workbench-base.css');
+@import url('./workflow.css');
+@import url('./studio.css');
+.walker-panel{overflow-x:auto}.walker-editor{min-width:1100px;padding:12px}.walker-intro{position:sticky;left:0}

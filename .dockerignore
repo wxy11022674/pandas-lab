@@ -1,0 +1,16 @@
+.git
+.venv
+node_modules
+dist
+data
+outputs
+.qa
+.pytest_cache
+.pytest-work
+**/__pycache__
+**/*.pyc
+*.tsbuildinfo
+.env
+.env.*
+*.pem
+*.key

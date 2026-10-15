@@ -1,0 +1,175 @@
+{
+  "version": "campus-v2",
+  "synthetic": true,
+  "fields": {
+    "building_id": [
+      "楼宇编号",
+      "Building ID",
+      ""
+    ],
+    "date": [
+      "月份",
+      "Month",
+      "YYYY-MM-DD"
+    ],
+    "electricity_kwh": [
+      "用电量",
+      "Electricity",
+      "kWh"
+    ],
+    "water_m3": [
+      "用水量",
+      "Water",
+      "m³"
+    ],
+    "temperature_c": [
+      "平均气温",
+      "Temperature",
+      "°C"
+    ],
+    "occupancy_pct": [
+      "使用率",
+      "Occupancy",
+      "%"
+    ],
+    "meter_status": [
+      "电表状态",
+      "Meter status",
+      ""
+    ],
+    "building_name": [
+      "楼宇名称",
+      "Building name",
+      ""
+    ],
+    "building_type": [
+      "楼宇类型",
+      "Building type",
+      ""
+    ],
+    "zone": [
+      "校区",
+      "Zone",
+      ""
+    ],
+    "area_m2": [
+      "建筑面积",
+      "Floor area",
+      "m²"
+    ],
+    "capacity": [
+      "使用人数",
+      "Occupants",
+      "人 / people"
+    ],
+    "energy_per_m2": [
+      "单位面积能耗",
+      "Energy per area",
+      "kWh/m²"
+    ],
+    "energy_per_person": [
+      "人均能耗",
+      "Energy per person",
+      "kWh/person"
+    ]
+  },
+  "tables": [
+    {
+      "key": "energy_2025",
+      "labels": [
+        "2025 能耗原始表",
+        "2025 energy · raw"
+      ],
+      "rows": 99,
+      "columns": [
+        "building_id",
+        "date",
+        "electricity_kwh",
+        "water_m3",
+        "temperature_c",
+        "occupancy_pct",
+        "meter_status"
+      ]
+    },
+    {
+      "key": "buildings",
+      "labels": [
+        "楼宇信息表",
+        "Building directory"
+      ],
+      "rows": 8,
+      "columns": [
+        "building_id",
+        "building_name",
+        "building_type",
+        "zone",
+        "area_m2",
+        "capacity"
+      ]
+    },
+    {
+      "key": "energy_2026",
+      "labels": [
+        "2026 能耗追加表",
+        "2026 energy · append"
+      ],
+      "rows": 96,
+      "columns": [
+        "building_id",
+        "date",
+        "electricity_kwh",
+        "water_m3",
+        "temperature_c",
+        "occupancy_pct",
+        "meter_status"
+      ]
+    },
+    {
+      "key": "reference",
+      "labels": [
+        "已处理的参考结果",
+        "Prepared reference"
+      ],
+      "rows": 96,
+      "columns": [
+        "building_id",
+        "date",
+        "electricity_kwh",
+        "water_m3",
+        "temperature_c",
+        "occupancy_pct",
+        "meter_status",
+        "building_name",
+        "building_type",
+        "zone",
+        "area_m2",
+        "capacity",
+        "energy_per_m2",
+        "energy_per_person"
+      ]
+    },
+    {
+      "key": "monthly",
+      "labels": [
+        "月度汇总参考",
+        "Monthly reference"
+      ],
+      "rows": 12,
+      "columns": [
+        "date",
+        "electricity_kwh",
+        "water_m3"
+      ]
+    }
+  ],
+  "checks": {
+    "raw_rows": 99,
+    "deduplicated_rows": 96,
+    "duplicates": 3,
+    "missing_cells": 15,
+    "building_keys": 8,
+    "reference_rows": 96,
+    "reference_missing": 0,
+    "reference_electricity_sum": 3365213.34
+  }
+}

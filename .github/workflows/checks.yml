@@ -1,0 +1,33 @@
+name: Build and test
+on:
+  push:
+    branches: [main]
+  pull_request:
+permissions:
+  contents: read
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+      - run: npm ci
+      - run: npm run build
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+          cache: pip
+          cache-dependency-path: backend/requirements.txt
+      - run: pip install -r backend/requirements.txt
+      - run: python -m pytest backend/tests -q
+      - name: Validate production container
+        run: |
+          docker build -t pandas-lab:check .
+          docker run -d --name pandas-lab-check -p 8000:8000 pandas-lab:check
+          trap 'docker logs pandas-lab-check; docker rm -f pandas-lab-check' EXIT
+          curl --fail --retry 15 --retry-delay 2 --retry-connrefused http://localhost:8000/api/health
+          curl --fail http://localhost:8000/ > /dev/null
+          curl --fail -c /tmp/pandas-lab-cookies http://localhost:8000/api/workspace/bootstrap > /dev/null

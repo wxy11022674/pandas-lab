@@ -1,0 +1,9 @@
+﻿building_id,building_name,building_type,zone,area_m2,capacity
+B01,Library,Library,North,8200,600
+B02,Teaching A,Teaching,North,13500,1600
+B03,Lab A,Laboratory,North,9700,450
+B04,Dorm A,Dormitory,South,18000,2200
+B05,Teaching B,Teaching,South,11200,1250
+B06,Lab B,Laboratory,East,7600,380
+B07,Dorm B,Dormitory,East,15600,1850
+B08,Sports Center,Sports,South,12500,800
