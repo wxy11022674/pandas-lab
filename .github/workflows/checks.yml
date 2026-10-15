@@ -28,6 +28,6 @@ jobs:
           docker build -t pandas-lab:check .
           docker run -d --name pandas-lab-check -p 8000:8000 pandas-lab:check
           trap 'docker logs pandas-lab-check; docker rm -f pandas-lab-check' EXIT
-          curl --fail --retry 15 --retry-delay 2 --retry-connrefused http://localhost:8000/api/health
+          curl --fail --retry 15 --retry-delay 2 --retry-all-errors --retry-max-time 60 http://localhost:8000/api/health
           curl --fail http://localhost:8000/ > /dev/null
           curl --fail -c /tmp/pandas-lab-cookies http://localhost:8000/api/workspace/bootstrap > /dev/null
