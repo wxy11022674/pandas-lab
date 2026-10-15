@@ -2,12 +2,17 @@
 import { mkdir, readFile, writeFile, copyFile, readdir, cp } from 'node:fs/promises';
 import path from 'node:path';
 import { createHash } from 'node:crypto';
+import { gzipSync } from 'node:zlib';
 const version = '314.0.7';
 const target = path.resolve('public/pyodide');
 await mkdir(target, { recursive: true });
 for (const name of await readdir('node_modules/pyodide')) {
   if (/\.(m?js|wasm|zip|json)$/.test(name)) await copyFile(`node_modules/pyodide/${name}`, path.join(target, name));
 }
+const wasm = await readFile(path.join(target, 'pyodide.asm.wasm'));
+const compressed = gzipSync(wasm, {level:9});
+await writeFile(path.join(target, 'pyodide.asm.wasm.gz'), compressed);
+console.log(`Compressed Python engine: ${(wasm.length/1048576).toFixed(1)} → ${(compressed.length/1048576).toFixed(1)} MB`);
 async function download(url, name, hash) {
   const file = path.join(target, name);
   try { const bytes = await readFile(file); if (!hash || createHash('sha256').update(bytes).digest('hex') === hash) return; } catch {}

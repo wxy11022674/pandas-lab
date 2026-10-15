@@ -7,6 +7,7 @@ export async function browserRequest(url:string, body?:unknown):Promise<EngineRe
   if (!worker) {
     worker = new Worker(`${import.meta.env.BASE_URL}pandas-worker.js`, {type:'module'});
     worker.onmessage = ({data}) => {
+      if(data.diagnostic){console.warn(data.diagnostic);return;}
       if (data.phase) { window.dispatchEvent(new CustomEvent('pandas-engine-phase',{detail:data.phase})); return; }
       pending.get(data.id)?.resolve(data.result); pending.delete(data.id);
     };

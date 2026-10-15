@@ -3,11 +3,38 @@ let engine;
 let initialized;
 let queue = Promise.resolve();
 const phase = value => self.postMessage({ phase: value });
+const warnOriginal = console.warn.bind(console);
+let failRuntime;
+console.warn = (...messages) => {
+  warnOriginal(...messages);
+  const diagnostic=messages.map(String).join(' ');
+  self.postMessage({diagnostic});
+  if(diagnostic.includes('wasm instantiation failed')) failRuntime?.(new Error('Python engine could not load'));
+};
 async function start() {
   phase('runtime');
   const base = new URL('./', self.location.href);
   const { loadPyodide } = await import(new URL('pyodide/pyodide.mjs', base).href);
-  engine = await loadPyodide({ indexURL: new URL('pyodide/', base).href });
+  const fetchOriginal = self.fetch.bind(self);
+  const wasmURL = new URL('pyodide/pyodide.asm.wasm', base).href;
+  if (typeof DecompressionStream !== 'undefined') {
+    // GitHub Pages does not consistently compress WASM. Decompress just this
+    // self-hosted resource while preserving Pyodide's own instantiation glue.
+    self.fetch = async (input,init) => {
+      const url = input instanceof Request ? input.url : String(input);
+      if (url !== wasmURL) return fetchOriginal(input,init);
+      const response = await fetchOriginal(wasmURL+'.gz',init);
+      if (!response.ok) throw new Error('Missing compressed Python engine');
+      const body=response.headers.get('Content-Encoding')?.includes('gzip')
+        ? response.body : response.body.pipeThrough(new DecompressionStream('gzip'));
+      return new Response(body,
+        {headers:{'Content-Type':'application/wasm'}});
+    };
+  }
+  try {
+    const failed = new Promise((_,reject) => {failRuntime=reject;});
+    engine = await Promise.race([loadPyodide({indexURL:new URL('pyodide/',base).href}),failed]);
+  } finally { self.fetch = fetchOriginal; failRuntime=undefined; }
   phase('packages');
   await engine.loadPackage(['pandas', 'pydantic']);
   const wheels = await (await fetch(new URL('pyodide/extra-wheels.json', base))).json();
