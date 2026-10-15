@@ -12,6 +12,8 @@ export const names:Record<string,[string,string]> = {
 };
 export const aggNames:Record<string,[string,string]>={sum:['求和','Sum'],mean:['平均值','Mean'],median:['中位数','Median'],count:['计数','Count'],min:['最小值','Minimum'],max:['最大值','Maximum'],std:['标准差','Std. deviation'],nunique:['不同值数量','Distinct count']};
 export const errors:Record<string,[string,string]>={
+ BROWSER_ENGINE_LOAD_FAILED:['计算组件加载失败，请检查网络后重试。','Could not load calculation components. Check your connection and retry.'],BROWSER_ENGINE_ERROR:['浏览器计算或保存失败，请检查可用存储空间并重试。','Browser calculation or saving failed. Check available storage and retry.'],
+
  NETWORK_ERROR:['连接失败，请检查本地服务是否正在运行。','Connection failed. Check that the local server is running.'],
  INVALID_VALUE:['参数不正确，请检查字段、类型与输入值。','Check the selected fields, types and input values.'],INVALID_COLUMN:['所选字段不存在或列名不合法。','The selected column is unavailable or invalid.'],
  COLUMN_EXISTS:['新列名为空、重复或与已有列冲突。','The new column name is blank or already exists.'],

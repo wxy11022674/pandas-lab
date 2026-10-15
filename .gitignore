@@ -12,5 +12,9 @@ outputs/
 .env
 .env.*
 !.env.example
+!.env.pages
 *.pem
 *.key
+public/pyodide/
+public/browser-python/
+public/examples/

@@ -14,3 +14,6 @@ outputs
 .env.*
 *.pem
 *.key
+public/pyodide
+public/browser-python
+public/examples

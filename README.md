@@ -2,15 +2,23 @@
 
 面向可视化导论课程的双语 pandas 数据处理与分析项目。导入 CSV、Excel 或 JSON，通过数据表、字段分布、关联图表和拖拽编辑器执行真实 pandas 分析。打开即可使用已准备好的数据，提供五步完整演示。
 
-## 在线部署
+## GitHub Pages 在线版
 
-项目使用 GitHub 管理源码，使用 Render Docker Web Service 运行完整网站。GitHub Pages 仅提供静态托管，不能运行本项目的 Python / pandas 接口。
+静态在线版通过 Pyodide / WebAssembly 在浏览器中运行真实 pandas，不需要 Render 或 Python 服务器。网页、Python 计算组件和示例文件均由 GitHub Pages 提供。用户导入的数据在浏览器内处理，并保存于当前站点的 IndexedDB。
 
-仓库内提供 `Dockerfile`、`render.yaml` 和 GitHub Actions 检查。部署步骤及运行边界见 [DEPLOYMENT.md](DEPLOYMENT.md)。
+首次打开需要下载计算组件；之后浏览器通常会缓存这些文件。清除浏览器站点数据会删除保存的工作区，重要结果请及时导出。该版本不提供账户登录或跨设备同步，处理能力取决于设备内存。
+
+```sh
+npm ci
+npm run build:pages
+npm run test:browser-engine
+```
+
+构建产物为 `dist/`。仓库的 `Deploy GitHub Pages` 工作流先验证 WebAssembly 引擎，再发布静态文件。操作逻辑与本地 Python 后端共用 `backend/` 源码，浏览器适配层只负责请求、上传和下载转换。设置步骤见 [DEPLOYMENT.md](DEPLOYMENT.md)。
 
 ## 本地启动
 
-需要 Python 3.11+、Node.js 22.12+。首次安装需要联网；依赖安装完成后，工作台本身在本机运行，不调用 AI 或外部数据服务。
+以下是保留的本地服务器运行方式，需要 Python 3.11+、Node.js 22.12+。GitHub Pages 在线版无需安装 Python。
 
 Windows 双击 **启动工作台.cmd**，或者在项目目录运行：
 
@@ -18,7 +26,7 @@ Windows 双击 **启动工作台.cmd**，或者在项目目录运行：
 .\start.ps1
 ```
 
-脚本安装 Python 依赖、安装并构建前端，然后启动服务。在浏览器打开 **http://127.0.0.1:8000**。关闭服务使用 Ctrl+C。
+脚本安装 Python 依赖、安装并构建前端，然后启动服务。在浏览器打开 **http://127.0.0.1:8000** 。关闭服务使用 Ctrl+C。
 
 已安装依赖时可使用 `./start.ps1 -SkipInstall`。构建后的前端由 FastAPI 一并提供服务，无需同时启动两个进程。
 
@@ -32,7 +40,7 @@ Windows 双击 **启动工作台.cmd**，或者在项目目录运行：
 npm run dev
 ```
 
-开发地址 http://127.0.0.1:5173；Vite 将 `/api` 转发给本地后端。
+开发地址 http://127.0.0.1:5173 ；Vite 将 `/api` 转发给本地后端。
 
 ```powershell
 # 类型检查及生产构建
@@ -111,6 +119,6 @@ npm run build
 
 界面、版本管理和方案对比为本项目实现。功能规划参考 [D-Tale](https://github.com/man-group/dtale)，分支探索理念参考 [Data Formulator](https://github.com/microsoft/data-formulator)。未复制这两个项目的源码。
 
-主要依赖：React（MIT）、Vite（MIT）、TypeScript（Apache-2.0）、Graphic Walker（Apache-2.0）、Apache ECharts（Apache-2.0）、Lucide（ISC）、FastAPI（MIT）、pandas（BSD-3-Clause）。具体依赖版本及完整许可证以安装包、`package-lock.json` 和 `backend/requirements.txt` 为准。
+主要依赖：React（MIT）、Vite（MIT）、TypeScript（Apache-2.0）、Graphic Walker（Apache-2.0）、Apache ECharts（Apache-2.0）、Lucide（ISC）、FastAPI（MIT）、pandas（BSD-3-Clause）。Pyodide（MPL-2.0）。具体依赖版本及完整许可证以安装包、`package-lock.json` 和 `backend/requirements.txt` 为准。
 
 API 字段和端点见 [API_CONTRACT.md](API_CONTRACT.md)。

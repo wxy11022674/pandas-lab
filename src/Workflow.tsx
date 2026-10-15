@@ -1,3 +1,4 @@
+import DownloadLink from './DownloadLink';
 import {ArrowRight,Upload,Table2,BarChart3,Download,BookOpen,Check} from 'lucide-react';
 import type {Lang,DataVersion} from './workbench-model';
 
@@ -31,8 +32,8 @@ export function StartScreen({lang,v,name,onUpload,onReady,onBrowse,onContinue,on
 export function ExportScreen({lang,v,name,onCode,onChart}:{lang:Lang;v:DataVersion;name:string;onCode:()=>void;onChart:()=>void}){
  const t=(z:string,e:string)=>lang==='zh'?z:e;
  return <div className="flow-export"><div className="task-intro"><span className="flow-eyebrow">{t('最后一步 · 保存成果','FINAL STEP · SAVE YOUR WORK')}</span><h1>{t('把分析结果带走','Take your results with you')}</h1><p>{name} · {v.rows} {t('行','rows')} · {v.history.length-1} {t('个已应用的处理步骤','applied steps')}</p></div><div className="export-options">
- <article><Table2/><h2>{t('处理后的表格','Processed table')}</h2><p>{t('下载当前已应用的结果，可以用 Excel 打开。尚未确认的预览不会导出。','Download the applied result for use in Excel. Unapplied previews are not included.')}</p><a className="wb-btn primary" href={`/api/versions/${v.id}/export.csv`} download>{t('下载结果 CSV','Download result CSV')}</a></article>
+ <article><Table2/><h2>{t('处理后的表格','Processed table')}</h2><p>{t('下载当前已应用的结果，可以用 Excel 打开。尚未确认的预览不会导出。','Download the applied result for use in Excel. Unapplied previews are not included.')}</p><DownloadLink className="wb-btn primary" href={`/api/versions/${v.id}/export.csv`} download>{t('下载结果 CSV','Download result CSV')}</DownloadLink></article>
  <article><BarChart3/><h2>{t('分析图表','Chart image')}</h2><p>{t('回到图表页生成图形，再点击“下载图片”。也可以保存图表设置，下次继续使用。','Generate a chart, then choose Download image. Save chart settings to reuse them later.')}</p><button className="wb-btn" onClick={onChart}>{t('前往图表页','Go to charts')}</button></article>
- <article><BookOpen/><h2>{t('处理过程与代码','Steps and code')}</h2><p>{t('查看每一步对应的 pandas 代码，下载脚本与原始数据，用于复现分析。','Review the pandas code and download it with the source data to reproduce your analysis.')}</p><button className="wb-btn" onClick={onCode}>{t('查看并下载代码','View and download code')}</button><a className="start-text-link" href={`/api/versions/${v.id}/recipe.json`} download>{t('下载操作记录 JSON','Download steps JSON')}</a></article>
+ <article><BookOpen/><h2>{t('处理过程与代码','Steps and code')}</h2><p>{t('查看每一步对应的 pandas 代码，下载脚本与原始数据，用于复现分析。','Review the pandas code and download it with the source data to reproduce your analysis.')}</p><button className="wb-btn" onClick={onCode}>{t('查看并下载代码','View and download code')}</button><DownloadLink className="start-text-link" href={`/api/versions/${v.id}/recipe.json`} download>{t('下载操作记录 JSON','Download steps JSON')}</DownloadLink></article>
  </div></div>;
 }

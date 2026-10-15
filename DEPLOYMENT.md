@@ -1,4 +1,35 @@
-# Pandas Lab 部署说明
+# GitHub Pages 部署
+
+## 推荐：浏览器计算版
+
+1. 在 GitHub 仓库 Settings → Pages 中选择 GitHub Actions 作为发布来源。
+2. 推送至 `main`，或手动执行 `Deploy GitHub Pages` 工作流。
+3. 工作流下载固定版本的 Python / pandas 组件，构建静态网页，运行 WebAssembly 功能检查，然后发布 `dist/`。
+4. 成功后使用工作流返回的 Pages 地址；项目路径为 `/pandas-lab/`。
+
+GitHub Free 的 Pages 需要公开仓库；支持私有仓库 Pages 的付费方案可保留源码私有。网站发布后公开可访问。
+
+页面不会连接 `127.0.0.1` 或远程 Python API。默认示例、Python 文件、运行时和所需 wheel 都随站点发布。导入、筛选、清洗、统计、图表数据计算及导出在 Web Worker 中执行，实际计算库仍为 pandas。
+
+## 浏览器数据保存
+
+数据及历史保存在当前浏览器、当前站点的 IndexedDB。刷新会恢复；清除站点数据或换设备不会自动同步。首次打开要下载约数十 MB 的运行时组件，请等待初始化；存储空间或内存不足时会报错。建议使用近期 Chrome / Edge。上传仍限制 10 MB、50,000 行、100 列，散点超过 3,000 点时采样。
+
+## 本地验证静态产物
+
+```sh
+npm ci
+npm run build:pages
+npm run test:browser-engine
+npx vite preview --host 127.0.0.1 --port 4174
+```
+
+打开 http://localhost:4174 。这个静态预览服务器只提供文件，不运行 pandas API，并为 JavaScript 模块提供正确的 MIME 类型。
+
+## 可选：保留 Python 服务器部署
+
+以下方式用于希望使用服务器计算的场景，GitHub Pages 版不需要执行。
+
 
 ## 运行方式
 

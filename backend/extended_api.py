@@ -6,8 +6,12 @@ import zipfile
 from pathlib import Path
 import numpy as np
 import pandas as pd
-from fastapi import Body, File, UploadFile
-from fastapi.responses import FileResponse, Response
+import sys
+if sys.platform == 'emscripten':
+    from backend.browser_transport import Body, File, UploadFile, FileResponse, Response
+else:
+    from fastapi import Body, File, UploadFile
+    from fastapi.responses import FileResponse, Response
 from backend.demo_pack import make_pack, LABELS, FIELDS, PACK_VERSION
 from backend.advanced import advanced_transform
 

@@ -14,10 +14,14 @@ from uuid import uuid4
 
 import numpy as np
 import pandas as pd
-from fastapi import FastAPI, File, Form, HTTPException, UploadFile
-from fastapi.exceptions import RequestValidationError
-from fastapi.responses import JSONResponse, Response
-from fastapi.staticfiles import StaticFiles
+import sys
+if sys.platform == 'emscripten':
+    from backend.browser_transport import FastAPI, File, Form, HTTPException, UploadFile, RequestValidationError, JSONResponse, Response, StaticFiles
+else:
+    from fastapi import FastAPI, File, Form, HTTPException, UploadFile
+    from fastapi.exceptions import RequestValidationError
+    from fastapi.responses import JSONResponse, Response
+    from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel, Field
 from backend.advanced import ADVANCED, advanced_transform
 
